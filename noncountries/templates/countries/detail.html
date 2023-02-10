@@ -1,11 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{{the_country.name}}
-{{the_country.area}}
-</body>
-</html>
+{% extends 'countries/base.html' %}
+
+{% block content %}
+    <h1>{{the_country.name}}|{{the_country.original_name}}</h1>
+    <hr>
+    <ul>
+        <li>{{the_country.area}}</li>
+        <li>{{the_country.population}}</li>
+    </ul>
+    {% if the_country.emblem %}
+        <p><img src="{{the_country.emblem.url}}" class="img-article-left"></p>
+    {% endif %}
+     <audio
+        controls
+        src="{{the_country.anthem.url}}">
+    </audio>
+    {{the_country.description|linebreaks}}
+    <hr>
+    {{the_country.reasons|linebreaks}}
+
+
+{% endblock %}

@@ -33,6 +33,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'cat_slug': self.slug})
+
 
 class Language(models.Model):
     name = models.CharField(max_length=50, verbose_name='Язык')

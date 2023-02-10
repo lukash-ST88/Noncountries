@@ -1,9 +1,9 @@
 from .models import *
 from django.db.models import Count
 
-menu = [{'title': 'О сайте', 'url_name': 'lVpattern'},
-        {'title': 'Добавить страну', 'url_name': 'CVpattern'},
-        {'title': 'Терминология', 'url_name': 'UVpattern'},
+menu = [{'title': 'О сайте', 'url_name': 'about'},
+        {'title': 'Добавить страну', 'url_name': 'add_country'},
+        {'title': 'Терминология', 'url_name': 'terminology'},
         ]
 
 
