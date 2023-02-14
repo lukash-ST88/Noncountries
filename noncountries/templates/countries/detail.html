@@ -1,22 +1,44 @@
 {% extends 'countries/base.html' %}
 
 {% block content %}
-    <h1>{{the_country.name}}|{{the_country.original_name}}</h1>
-    <hr>
-    <ul>
-        <li>{{the_country.area}}</li>
-        <li>{{the_country.population}}</li>
-    </ul>
-    {% if the_country.emblem %}
-        <p><img src="{{the_country.emblem.url}}" class="img-article-left"></p>
-    {% endif %}
-     <audio
-        controls
-        src="{{the_country.anthem.url}}">
-    </audio>
-    {{the_country.description|linebreaks}}
-    <hr>
-    {{the_country.reasons|linebreaks}}
+    <table>
+        <tr>
+            <h1 >{{the_country.name}}|{{the_country.original_name}}</h1>
+        </tr>
+        <hr>
+        <tr>
+            <td width="25%" valign="top">
 
+                <ul class="nobullet">
+                    <li>{% if the_country.emblem %}
+                <p><img src="{{the_country.emblem.url}}" class="emblem-detail"></p>
+                {% endif %}</li>
+                    <li>
+                        <p><audio controls src="{{the_country.anthem.url}}"> </audio></p>
+                    </li>
+                </ul>
+                <ul class="nobullet">
+                    <li>Год создания: {{the_country.year}}</li>
+                    <li>Столица: {{the_country.capital}} </li>
+                    <li>Язык: {{the_country.language}}</li>
+                    <li> Население: {{the_country.population}} млн</li>
+                    <li> Полощадь: {{the_country.area}} км<sup>2</sup></li>
+                </ul>
+
+            </td>
+            <td valign="top">
+
+
+            <p>{{the_country.description}}</p>
+                   <hr>
+            <p>{{the_country.reasons}}</p>
+
+
+            </td>
+        </tr>
+
+        </tr>
+
+    </table>
 
 {% endblock %}
