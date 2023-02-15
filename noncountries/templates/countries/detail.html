@@ -1,44 +1,67 @@
 {% extends 'countries/base.html' %}
 
 {% block content %}
-    <table>
-        <tr>
-            <h1 >{{the_country.name}}|{{the_country.original_name}}</h1>
-        </tr>
-        <hr>
-        <tr>
-            <td width="25%" valign="top">
+<table class="table-content" border=0 cellspacing="0" cellpadding="0">
+    <tr>
+        {% include 'countries/include/sidebar.html' %}
+        <td valign="top" class="content">
+            <div class="content-text">
+                <table>
+                    <tr>
+                        <h2 align="center">{{the_country.name}}|{{the_country.original_name}}</h2>
+                    </tr>
+                    <hr>
+                    <tr>
+                        <td width="25%" valign="top">
 
-                <ul class="nobullet">
-                    <li>{% if the_country.emblem %}
-                <p><img src="{{the_country.emblem.url}}" class="emblem-detail"></p>
-                {% endif %}</li>
-                    <li>
-                        <p><audio controls src="{{the_country.anthem.url}}"> </audio></p>
-                    </li>
-                </ul>
-                <ul class="nobullet">
-                    <li>Год создания: {{the_country.year}}</li>
-                    <li>Столица: {{the_country.capital}} </li>
-                    <li>Язык: {{the_country.language}}</li>
-                    <li> Население: {{the_country.population}} млн</li>
-                    <li> Полощадь: {{the_country.area}} км<sup>2</sup></li>
-                </ul>
+                            <ul class="nobullet">
+                                <li>{% if the_country.emblem %}
+                                    <p><img src="{{the_country.emblem.url}}" class="emblem-detail"></p>
+                                    {% endif %}
+                                </li>
+                                <li>
+                                    <p>
+                                        <audio controls src="{{the_country.anthem.url}}"></audio>
+                                    </p>
+                                </li>
+                            </ul>
+                            <ul class="nobullet">
+                                <li>Год создания: {{the_country.year}}</li>
+                                <li>Столица: {{the_country.capital}}</li>
+                                <li>Язык:
+                                    {% for l in the_country.language.all %}
+                                    <span> {{l}} </span>
+                                    {% endfor %}
+                                </li>
+                                <li> Население: {{the_country.population}} млн</li>
+                                <li> Полощадь: {{the_country.area}} км<sup>2</sup></li>
+                            </ul>
 
-            </td>
-            <td valign="top">
+                        </td>
+                        <td valign="top">
 
 
-            <p>{{the_country.description}}</p>
-                   <hr>
-            <p>{{the_country.reasons}}</p>
+                            <p>{{the_country.description}}</p>
+                            <hr>
+                            <p>{{the_country.reasons}}</p>
 
 
-            </td>
-        </tr>
+                        </td>
+                    </tr>
 
-        </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class=figure align="center">
+                                <p><img src="{{the_country.map.url}}" class="figure"></p>
+                                <p> {{the_country.name}} - Карта </p>
+                            </div>
+                        <td>
+                    </tr>
 
-    </table>
-
+                </table>
+                {% include 'countries/include/pagination.html' %}
+            </div>
+        </td>
+    </tr>
+</table>
 {% endblock %}

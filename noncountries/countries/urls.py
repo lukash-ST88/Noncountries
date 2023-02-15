@@ -11,4 +11,6 @@ urlpatterns = [
     path('login/', LoginUser.as_view(), name='login'),
     path('logout/', logout_user, name='logout'),
     path('register/', RegisterUser.as_view(), name='register'),
+    path('search/', SearchView.as_view(), name='search'),
+    path('sort/', CountryListYearOrdering.as_view(), name='sort'),
     ]

@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{{title}}
-</body>
-</html>
+{% extends 'countries/base.html' %}
+{% block content %}
+<h1 style="text-decoration: underline;" align="center"> {{title}} </h1>
+<div class="about"><p align="center"> Данный сайт посвещен описанию непризнанных или частично призанных стран. </p>
+</div>
+{% endblock %}

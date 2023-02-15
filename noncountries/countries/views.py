@@ -1,19 +1,20 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-
-from .forms import AddCountryForm, LoginUserForm, RegisterUserForm
+from .forms import AddCountryForm, LoginUserForm, RegisterUserForm, OrderingForm
 from .utils import menu, DataMixin
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, FormView
 from .models import Country, Category
 
 
-class CountryList(DataMixin, ListView):
+class CountryList(DataMixin, FormView, ListView):
     model = Country
     template_name = 'countries/index.html'
     context_object_name = 'countries'
+    form_class = OrderingForm
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -33,11 +34,12 @@ class CountryDetail(DataMixin, DetailView):
         return dict(list(context.items()) + list(mixin_context.items()))
 
 
-class CountryCategory(DataMixin, ListView):
+class CountryCategory(DataMixin, FormView, ListView):
     model = Country
     template_name = 'countries/index.html'
     context_object_name = 'countries'
     allow_empty = False
+    form_class = OrderingForm
 
     def get_queryset(self):
         return Country.objects.filter(cat__slug=self.kwargs['cat_slug'])
@@ -59,11 +61,12 @@ class AddCountry(DataMixin, CreateView):
         mixin_context = self.get_user_context(title='Новая страна')
         return dict(list(context.items()) + list(mixin_context.items()))
 
+
 class LoginUser(DataMixin, LoginView):
     form_class = LoginUserForm
     template_name = 'countries/login.html'
 
-    def get_context_data(self, *,  object_list=None, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         mixin_context = self.get_user_context(title='Авторизация')
         return dict(list(context.items()) + list(mixin_context.items()))
@@ -71,12 +74,13 @@ class LoginUser(DataMixin, LoginView):
     def get_success_url(self):
         return reverse_lazy('home')
 
+
 def logout_user(request):
     logout(request)
     return redirect('login')
 
 
-class RegisterUser(DataMixin, CreateView): #django crispy forms
+class RegisterUser(DataMixin, CreateView):  # django crispy forms
     form_class = RegisterUserForm
     template_name = 'countries/register.html'
     success_url = reverse_lazy('login')
@@ -90,6 +94,36 @@ class RegisterUser(DataMixin, CreateView): #django crispy forms
         user = form.save()
         login(self.request, user)
         return redirect('home')
+
+
+class SearchView(DataMixin, FormView, ListView):
+    """класс отображения результатов поисковой строки"""
+    template_name = 'countries/index.html'
+    context_object_name = 'countries'
+    form_class = OrderingForm
+
+    def get_queryset(self):
+        return Country.objects.filter(name__icontains=self.request.GET.get('q'))
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        mixin_context = self.get_user_context(title='Результат поиска', q=f"q={self.request.GET.get('q')}&")
+        return dict(list(context.items()) + list(mixin_context.items()))
+
+
+class CountryListYearOrdering(DataMixin, FormView, ListView):
+    """класс представления отсортированного списка"""
+    template_name = 'countries/index.html'
+    context_object_name = 'countries'
+    form_class = OrderingForm
+
+    def get_queryset(self):
+        return Country.objects.all().order_by(self.request.GET.get('ordering'))
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        mixin_context = self.get_user_context(title='Сортировка по году', ord=f"ordering={self.request.GET.get('ordering')}&")
+        return dict(list(context.items()) + list(mixin_context.items()))
 
 
 def about(request):

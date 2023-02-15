@@ -1,15 +1,18 @@
 {% extends 'countries/base.html' %}
 
 {% block content %}
-<h1>{{title}}</h1>
-<form action="{% url 'add_country' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="form-error">{{form.non_field_errors}}</div>
-    {% for f in form %}
-    <p><label class="form-label" for="{{f.id_for_label}}">{{f.label}}: </label>{{f}}</p>
-    <div class="form-error">{{f.errors}}</div>
-    {% endfor %}
-    <button type="submit">Добавить</button>
-
-</form>
+<h1 align="center" style="text-decoration: underline;">{{title}}</h1>
+    <div id="form-frame">
+        <form action="{% url 'add_country' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            <div class="form-error">{{form.non_field_errors}}</div>
+            {% for f in form %}
+            <ul>
+                <li class="nobullet"><label class="form-label" for="{{f.id_for_label}}">{{f.label}}: </label>{{f}}</li>
+            </ul>
+            <div class="form-error">{{f.errors}}</div>
+            {% endfor %}
+            <button type="submit" class="form-button">Добавить</button>
+        </form>
+    </div>
 {% endblock %}
