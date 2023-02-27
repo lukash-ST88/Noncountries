@@ -5,3 +5,5 @@ admin.site.register(Country)
 admin.site.register(Language)
 admin.site.register(Category)
 admin.site.register(City)
+
+#TODO: сделать возможность мнодественного добавления в модели
