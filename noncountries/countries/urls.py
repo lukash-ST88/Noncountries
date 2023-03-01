@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import *
+from .views import CountryList, CountryDetail, about, CountryCategory, AddCountry, terminology, LoginUser, logout_user, \
+    RegisterUser, SearchView, CountryListYearOrdering
 
 urlpatterns = [
     path('', CountryList.as_view(), name='home'),
@@ -13,4 +14,4 @@ urlpatterns = [
     path('register/', RegisterUser.as_view(), name='register'),
     path('search/', SearchView.as_view(), name='search'),
     path('sort/', CountryListYearOrdering.as_view(), name='sort'),
-    ]
+]
