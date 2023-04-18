@@ -1,3 +1,5 @@
+{% load cache %}
+{% cache 60 sidebar %}
 <td valign="top" class="left-chapters">
         <ul id="left-chapters">
             {% if cat_selected == 0 %}
@@ -34,3 +36,4 @@
             </li>
         </ul>
 </td>
+{% endcache %}

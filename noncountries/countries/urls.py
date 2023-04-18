@@ -1,12 +1,14 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
+
 from .views import CountryList, CountryDetail, about, CountryCategory, AddCountry, terminology, LoginUser, logout_user, \
     RegisterUser, SearchView, CountryListYearOrdering
 
 urlpatterns = [
-    path('', CountryList.as_view(), name='home'),
+    path('', cache_page(60)(CountryList.as_view()), name='home'),
     path('country/<slug:country_slug>', CountryDetail.as_view(), name='detail'),
     path('about/', about, name='about'),
-    path('category/<slug:cat_slug>', CountryCategory.as_view(), name='category'),
+    path('category/<slug:cat_slug>', cache_page(60)(CountryCategory.as_view()), name='category'),
     path('add-country/', AddCountry.as_view(), name="add_country"),
     path('terminology/', terminology, name='terminology'),
     path('login/', LoginUser.as_view(), name='login'),

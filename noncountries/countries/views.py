@@ -8,6 +8,7 @@ from .forms import AddCountryForm, LoginUserForm, RegisterUserForm, OrderingForm
 from .utils import menu, DataMixin
 from django.views.generic import ListView, DetailView, CreateView, FormView
 from .models import Country, Category
+from django.views.decorators.cache import cache_page
 
 
 class CountryList(DataMixin, FormView, ListView):
@@ -20,6 +21,9 @@ class CountryList(DataMixin, FormView, ListView):
         context = super().get_context_data(**kwargs)
         mixin_context = self.get_user_context(title='Главная страница')
         return dict(list(context.items()) + list(mixin_context.items()))
+
+    def get_queryset(self, *args, **kwargs):
+        return Country.objects.all().select_related('cat')
 
 
 class CountryDetail(DataMixin, DetailView):
@@ -42,7 +46,7 @@ class CountryCategory(DataMixin, FormView, ListView):
     form_class = OrderingForm
 
     def get_queryset(self):
-        return Country.objects.filter(cat__slug=self.kwargs['cat_slug'])
+        return Country.objects.filter(cat__slug=self.kwargs['cat_slug']).select_related('cat')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -103,7 +107,7 @@ class SearchView(DataMixin, FormView, ListView):
     form_class = OrderingForm
 
     def get_queryset(self):
-        return Country.objects.filter(name__icontains=self.request.GET.get('q'))
+        return Country.objects.filter(name__icontains=self.request.GET.get('q')).select_related('cat')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -118,11 +122,12 @@ class CountryListYearOrdering(DataMixin, FormView, ListView):
     form_class = OrderingForm
 
     def get_queryset(self):
-        return Country.objects.all().order_by(self.request.GET.get('ordering'))
+        return Country.objects.all().order_by(self.request.GET.get('ordering')).select_related('cat')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        mixin_context = self.get_user_context(title='Сортировка по году', ord=f"ordering={self.request.GET.get('ordering')}&")
+        mixin_context = self.get_user_context(title='Сортировка по году',
+                                              ord=f"ordering={self.request.GET.get('ordering')}&")
         return dict(list(context.items()) + list(mixin_context.items()))
 
 

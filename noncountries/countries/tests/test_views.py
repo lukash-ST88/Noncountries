@@ -22,6 +22,7 @@ class TestView(TestCase):
                                               capital=City.objects.create(name='cot)'))
         self.language = Language.objects.create(name='language1')
 
+
     def test_country_list_GET(self):
         response = self.client.get(self.country_list)
 
