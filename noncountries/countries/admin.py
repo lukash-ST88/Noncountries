@@ -7,4 +7,4 @@ admin.site.register(Category)
 admin.site.register(City)
 
 #TODO: сделать возможность множественного добавления в модели
-#TODO: REST сделать расписанным для сериализации
+

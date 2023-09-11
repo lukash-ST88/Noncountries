@@ -183,3 +183,6 @@ INTERNAL_IPS = [
     "127.0.0.1",
     "localhost",
 ]
+
+
+#TODO: send email using redis-celery (see Django_tutorial)
