@@ -43,9 +43,8 @@ POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_NAME=name
 ```
-<p>5. Install redis-server on linux machine: <a ref='https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-20-04'>https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-20-04</a></p>
-<p> 6. Start redis server </p>
-
+<p>5. Install [redis-server]](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-20-04) on linux machine.
+  
 ```
 sudo service redis-server start
 ```
