@@ -48,10 +48,15 @@ POSTGRES_NAME=name
 ```
 sudo service redis-server start
 ```
+<p> 6. Migrate data to database</p>
+
+```
+cd noncountries
+python3 manage.py migrate
+```
 
 <p> 7. run the application </p>
 
 ```
-cd noncountries
 python3 manage.py runserver
 ```
