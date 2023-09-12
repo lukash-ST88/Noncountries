@@ -3,7 +3,7 @@
 <h4> Application description</h4>
 This is a pat project which is dedicated to unrecognized countries. 
 
-<ui><h4>The functionality of the project includes:</h4></ui>
+
 <li>Base django authentication system</li>
 <li>Possibility to add new countries by an authorized user
 <li>Possibility to sort content by foundation year of country
@@ -18,15 +18,17 @@ This is a pat project which is dedicated to unrecognized countries.
 <li> psycopg2
 <li> bootstrap
 
+
 <h4>Screen of application</h4>
-![Screenshot_of_app.png](Screenshot_of_app.png)
+
+![Alt text](Screenshot_of_app.png)
 
 
 <h4>Steps to activate the project on linux machine:</h4>
 <p> 1. Clone git repository to your machine:</p>
 
 ```
-git clone git@github.com:lukash-ST88/Noncountries.git
+git clone https://github.com/lukash-ST88/Noncountries.git
 ```
 
 <p> 2. Create and activate virtual environment: </p>
